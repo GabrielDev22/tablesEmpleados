@@ -22,48 +22,85 @@ public class JefeServiceImplementation implements JefeService {
 
     @Override
     public List<Jefe> getAllJefes(){
-        logger.info("Iniciando getAllJefes");
-        List<Jefe> allJefes = jefeRepository.findAll();
-        if(allJefes.isEmpty()){
-            logger.error("No se encontro ningun jugador");
-            return null;
+        List<Jefe> allJefes = null;
+        try{
+            logger.info("Iniciando getAllJefes");
+             allJefes = jefeRepository.findAll();
+            if(allJefes.isEmpty()){
+                logger.error("No se encontro ningun jugador");
+                return null;
+            }
+            logger.info("Finalizando getAllJefes");
+            return allJefes;
+
+        }catch (Exception exception){
+            logger.error(exception.getMessage());
         }
-        logger.info("Finalizando getAllJefes");
         return allJefes;
     }
 
     @Override
     public Jefe getJefeById(Integer id) {
-        logger.info("Empezando getJugadoresById");
-        Jefe particularJefe = jefeRepository.getReferenceById(id);
-        logger.info("Terminando getJefeById");
+        Jefe particularJefe = null;
+        try{
+            logger.info("Empezando getJugadoresById");
+            particularJefe = jefeRepository.getReferenceById(id);
+            if(particularJefe.getId() == null) {
+                logger.error("No se encontro el Id de Jefe");
+                return null;
+            }
+            logger.info("Terminando getJefeById");
+            return particularJefe;
+
+        } catch (Exception exception) {
+            logger.error(exception.getMessage());
+        }
         return particularJefe;
     }
 
     @Override
     public Jefe createJefe(Jefe jefe) {
-        logger.info("Empezando el createJugadores");
-        if(!StringUtils.hasText(jefe.getName()))
-            return null;
-        Jefe createJefe = jefeRepository.save(jefe);
-        logger.info("Terminando createJugadores");
-        return createJefe;
+        Jefe createJefe = null;
+        try{
+            logger.info("Empezando el createJugadores");
+            if(!StringUtils.hasText(jefe.getName())) {
+                logger.error("No se hizo la actualizacion de este usuario");
+                return null;
+            }
+            createJefe = jefeRepository.save(jefe);
+            logger.info("Terminando createJugadores");
+            return createJefe;
+
+        }catch (Exception exception){
+            logger.error(exception.getMessage());
+        }
+       return createJefe;
     }
     @Override
     public Jefe updateJefe(Jefe jefe) {
-        logger.info("Empezando el updateJugadores");
-        if(!StringUtils.hasText(jefe.getName())){
-            logger.error("Falto algun dato");
-            return null;
+        Jefe updateJefe = null;
+        try{
+            logger.info("Empezando el updateJugadores");
+            if(!StringUtils.hasText(jefe.getName())){
+                logger.error("Falto algun dato");
+                return null;
+            }
+             updateJefe = jefeRepository.save(jefe);
+            logger.info("Terminando el updateJugadores");
+
+        }catch (Exception exception){
+            logger.error(exception.getMessage());
         }
-        Jefe updateJefe = jefeRepository.save(jefe);
-        logger.info("Terminando el updateJugadores");
         return updateJefe;
     }
     @Override
     public void deleteJefeById(Integer id) {
-        logger.info("Empezando la eliminacion del jugador");
-        jefeRepository.deleteById(id);
-        logger.info("Finalizando la eliminacion del jugador");
+        try{
+            logger.info("Empezando la eliminacion del jugador");
+            jefeRepository.deleteById(id);
+            logger.info("Finalizando la eliminacion del jugador");
+        }catch (Exception exception){
+            logger.error(exception.getMessage());
+        }
     }
 }
