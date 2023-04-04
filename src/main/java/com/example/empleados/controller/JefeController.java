@@ -15,20 +15,40 @@ public class JefeController {
     public JefeController(JefeService jefeService) {this.jefeService = jefeService;}
 
     @GetMapping("/getAll")
-    public List<Jefe> getAllJefes() {return jefeService.getAllJefes();}
+    public List<Jefe> getAllJefes() {
+        if(getAllJefes() == null){
+            return null;
+        }
+        return jefeService.getAllJefes();
+    }
 
     @GetMapping("/get/{id}")
-    public Jefe getJefeById(@PathVariable Integer id) {return jefeService.getJefeById(id);}
+    public Jefe getJefeById(@PathVariable Integer id) {
+        if(getJefeById(id) == null){
+            return null;
+        }
+        return jefeService.getJefeById(id);
+    }
 
     @PostMapping("/create")
-    public Jefe creatJefeEmpleado(@RequestBody Jefe jefe) {return jefeService.createJefe(jefe);}
+    public Jefe creatJefeEmpleado(@RequestBody Jefe jefe) {
+        if(creatJefeEmpleado(jefe) == null){
+            return null;
+        }
+        return jefeService.createJefe(jefe);
+    }
 
     @PutMapping("/update")
     public Jefe updateJefe(@RequestBody Jefe jefe){
+        if(updateJefe(jefe) == null){
+            return null;
+        }
         return jefeService.updateJefe(jefe);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteJefeById(@PathVariable Integer id) {jefeService.deleteJefeById(id);}
+    public void deleteJefeById(@PathVariable Integer id) {
+        jefeService.deleteJefeById(id);
+    }
 
 }
